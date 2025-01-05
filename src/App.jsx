@@ -3,19 +3,28 @@ import axios from "axios";
 
 function App() {
   // useEffect(() => {}, []);
-  const [data, setData] = useState("");
+  const [data, setData] = useState({});
+  const [user, setName] = useState("");
   return (
     <div className="App">
+      <input
+        type="text"
+        placeholder="Enter your name"
+        onChange={(event) => {
+          setName(event.target.value);
+        }}
+      ></input>
       <button
         onClick={() => {
-          axios.get("https://catfact.ninja/fact").then((res) => {
-            setData(res.data.fact);
+          axios.get(`https://api.agify.io/?name=${user}`).then((res) => {
+            setData(res.data);
           });
         }}
       >
-        Fetch cat facts
+        Fetch details
       </button>
-      <p>{data}</p>
+      <h1>Name: {data.name}</h1>
+      <h2>Predicted age: {data.age}</h2>
     </div>
   );
 }
